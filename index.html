@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Easter Wish Generator</title>
+    <style>
+        /* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fef8e4;
+    color: #333;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+/* Header styles */
+header {
+    background-color: #ffebc5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #ff9f68;
+    font-size: 2.5em;
+}
+
+header p {
+    font-size: 1.2em;
+    color: #6c6c6c;
+}
+
+/* Main content styles */
+main {
+    margin-top: 50px;
+}
+
+/* Wish Generator Form */
+#wish-generator h2 {
+    color: #ffb04b;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#wish-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#wish-form input,
+#wish-form textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: #ff9f68;
+    color: white;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff6b3b;
+}
+
+/* Generated Link Section */
+#generated-link-section {
+    margin-top: 30px;
+}
+
+#generated-link-section p {
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+
+/* Greeting Section */
+#greeting-section {
+    margin-top: 50px;
+    background-color: #f0f8ff;
+    padding: 30px;
+    border-radius: 10px;
+    font-size: 1.3em;
+    color: #ff6b3b;
+}
+
+/* Footer styles */
+footer {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #ffebc5;
+    color: #6c6c6c;
+    font-size: 1.1em;
+    border-radius: 10px;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌸 Easter Wishing Well 🌸</h1>
+        <p>Generate a personalized wish for your friend or family member!</p>
+    </header>
+
+    <main>
+        <!-- Wish Generator Section -->
+        <section id="wish-generator">
+            <h2>💌 Generate Your Personalized Easter Wish 💌</h2>
+            <form id="wish-form">
+                <input type="text" id="your-name" placeholder="Your Name" required>
+                <input type="text" id="recipient-name" placeholder="Recipient's Name" required>
+                <textarea id="wish-message" placeholder="Write your Easter wish here..." rows="5" required></textarea>
+                <button type="submit" id="generate-link">Generate Link</button>
+            </form>
+        </section>
+
+        <!-- Generated Link Section -->
+        <section id="generated-link-section" style="display: none;">
+            <h3>Your Personalized Link</h3>
+            <p id="personalized-link"></p>
+            <button id="copy-link" onclick="copyLink()">Copy Link</button>
+        </section>
+
+        <!-- Greeting Section (for recipient) -->
+        <section id="greeting-section" style="display: none;">
+            <h3>Welcome, <span id="welcome-name"></span>!</h3>
+            <p id="personalized-wish"></p>
+            <button onclick="inviteSomeoneElse()">Invite Someone Else</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>🌸 May your Easter wishes come true! 🌸</p>
+    </footer>
+
+    <script>
+        // Get the DOM elements
+const wishForm = document.getElementById('wish-form');
+const yourNameInput = document.getElementById('your-name');
+const recipientNameInput = document.getElementById('recipient-name');
+const wishMessageInput = document.getElementById('wish-message');
+const generatedLinkSection = document.getElementById('generated-link-section');
+const personalizedLink = document.getElementById('personalized-link');
+const copyButton = document.getElementById('copy-link');
+const greetingSection = document.getElementById('greeting-section');
+const welcomeName = document.getElementById('welcome-name');
+const personalizedWish = document.getElementById('personalized-wish');
+
+// Function to generate a personalized link
+function generateLink(userName, recipientName, wishMessage) {
+    const encodedWishMessage = encodeURIComponent(wishMessage);
+    const encodedRecipientName = encodeURIComponent(recipientName);
+    const fromName = encodeURIComponent(userName);
+    return `https://yourwebsite.com/?recipient=${encodedRecipientName}&wish=${encodedWishMessage}&from=${fromName}`;
+}
+
+// Event listener for the form submit
+wishForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Get the values from the form inputs
+    const yourName = yourNameInput.value.trim();
+    const recipientName = recipientNameInput.value.trim();
+    const wishMessage = wishMessageInput.value.trim();
+
+    // Generate the personalized link
+    if (yourName && recipientName && wishMessage) {
+        const link = generateLink(yourName, recipientName, wishMessage);
+
+        // Display the personalized link
+        personalizedLink.textContent = link;
+        generatedLinkSection.style.display = 'block';
+
+        // Clear the form inputs
+        yourNameInput.value = '';
+        recipientNameInput.value = '';
+        wishMessageInput.value = '';
+    } else {
+        alert('Please fill in all fields!');
+    }
+});
+
+// Function to copy the link to clipboard
+function copyLink() {
+    const textArea = document.createElement('textarea');
+    textArea.value = personalizedLink.textContent;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+
+    alert('Link copied to clipboard!');
+}
+
+// Function to invite someone else (forward wish)
+function inviteSomeoneElse() {
+    // Clear the greeting section
+    greetingSection.style.display = 'none';
+
+    // Display the form for creating a new wish
+    document.getElementById('wish-generator').style.display = 'block';
+    document.getElementById('generate-link').innerText = 'Generate New Wish Link';
+}
+
+// Check the URL for the personalized query parameters
+function checkURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const recipient = urlParams.get('recipient');
+    const wish = urlParams.get('wish');
+    const from = urlParams.get('from');
+
+    if (recipient && wish && from) {
+        welcomeName.textContent = recipient;
+        personalizedWish.textContent = `You have a special wish from ${from}: "${decodeURIComponent(wish)}"`;
+        greetingSection.style.display = 'block';
+    }
+}
+
+// Check the URL when the page loads
+window.onload = checkURL;
+
+    </script>
+</body>
+</html>
