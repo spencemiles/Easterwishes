@@ -4,119 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalized Easter Wish Generator</title>
-    <style>
-        /* Reset default styles */
+   <style>
+    /* Basic Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styles */
+/* Body and Background */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #fef8e4;
+    background-color: #f9f9f9;
     color: #333;
-    text-align: center;
-    padding: 30px 20px;
+    line-height: 1.6;
 }
 
-/* Header styles */
+/* Header */
 header {
-    background-color: #ffebc5;
+    text-align: center;
+    background-color: #FFB6C1;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    color: #ff9f68;
-    font-size: 2.5em;
+    font-size: 3rem;
+    color: #fff;
 }
 
 header p {
-    font-size: 1.2em;
-    color: #6c6c6c;
+    font-size: 1.2rem;
+    color: #fff;
 }
 
-/* Main content styles */
+/* Main Container */
 main {
-    margin-top: 50px;
+    padding: 30px 10%;
 }
 
-/* Wish Generator Form */
+section {
+    margin-bottom: 40px;
+}
+
+/* Wish Generator Section */
+#wish-generator {
+    background-color: #FFF8DC;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 #wish-generator h2 {
-    color: #ffb04b;
-    font-size: 2em;
-    margin-bottom: 20px;
+    text-align: center;
+    color: #FF6347;
 }
 
-#wish-form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+#wish-generator input,
+#wish-generator textarea,
+#wish-generator button {
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-#wish-form input,
-#wish-form textarea {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1em;
+    padding: 10px;
+    margin-top: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+#wish-generator input,
+#wish-generator textarea {
     margin-bottom: 15px;
 }
 
-button {
-    background-color: #ff9f68;
+#wish-generator button {
+    background-color: #FF6347;
     color: white;
-    padding: 15px 20px;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #ff6b3b;
+#wish-generator button:hover {
+    background-color: #FF4500;
 }
 
 /* Generated Link Section */
 #generated-link-section {
-    margin-top: 30px;
+    text-align: center;
+    background-color: #e0f7fa;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
 }
 
-#generated-link-section p {
-    font-size: 1.2em;
-    margin: 20px 0;
+#generated-link-section h3 {
+    font-size: 1.5rem;
+}
+
+#personalized-link {
+    font-size: 1.2rem;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+#copy-link {
+    background-color: #32CD32;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#copy-link:hover {
+    background-color: #228B22;
 }
 
 /* Greeting Section */
 #greeting-section {
-    margin-top: 50px;
-    background-color: #f0f8ff;
-    padding: 30px;
-    border-radius: 10px;
-    font-size: 1.3em;
-    color: #ff6b3b;
-}
-
-/* Footer styles */
-footer {
-    margin-top: 50px;
+    text-align: center;
+    background-color: #fff;
     padding: 20px;
-    background-color: #ffebc5;
-    color: #6c6c6c;
-    font-size: 1.1em;
     border-radius: 10px;
+    display: none;
 }
 
-    </style>
+#greeting-section h3 {
+    font-size: 2rem;
+    color: #FF6347;
+}
+
+#greeting-section p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#greeting-section button {
+    background-color: #FF6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#greeting-section button:hover {
+    background-color: #FF4500;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #FFB6C1;
+    margin-top: 50px;
+    color: white;
+}
+
+footer p {
+    font-size: 1rem;
+}
+
+   </style>
 </head>
 <body>
 
@@ -174,7 +223,7 @@ function generateLink(userName, recipientName, wishMessage) {
     const encodedWishMessage = encodeURIComponent(wishMessage);
     const encodedRecipientName = encodeURIComponent(recipientName);
     const fromName = encodeURIComponent(userName);
-    return `https://yourwebsite.com/?recipient=${encodedRecipientName}&wish=${encodedWishMessage}&from=${fromName}`;
+    return `index.html?recipient=${encodedRecipientName}&wish=${encodedWishMessage}&from=${fromName}`;
 }
 
 // Event listener for the form submit
