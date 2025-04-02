@@ -223,8 +223,10 @@ function generateLink(userName, recipientName, wishMessage) {
     const encodedWishMessage = encodeURIComponent(wishMessage);
     const encodedRecipientName = encodeURIComponent(recipientName);
     const fromName = encodeURIComponent(userName);
+    
     return `index.html?recipient=${encodedRecipientName}&wish=${encodedWishMessage}&from=${fromName}`;
 }
+
 
 // Event listener for the form submit
 wishForm.addEventListener('submit', function (e) {
@@ -282,11 +284,13 @@ function checkURL() {
     const from = urlParams.get('from');
 
     if (recipient && wish && from) {
-        welcomeName.textContent = recipient;
-        personalizedWish.textContent = `You have a special wish from ${from}: "${decodeURIComponent(wish)}"`;
+        document.getElementById('wish-generator').style.display = 'none';
         greetingSection.style.display = 'block';
+        welcomeName.textContent = recipient;
+        personalizedWish.textContent = `🌸 Happy Easter, ${recipient}! 🌸\n"${decodeURIComponent(wish)}"\n- From ${from}`;
     }
 }
+
 
 // Check the URL when the page loads
 window.onload = checkURL;
